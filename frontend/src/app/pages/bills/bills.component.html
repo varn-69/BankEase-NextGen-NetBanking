@@ -1,0 +1,46 @@
+<div class="container-fluid py-4">
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="h2">Bills</h1>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="alert alert-info">Loading bills...</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <div *ngIf="!loading" class="table-responsive">
+    <table class="table table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Biller</th>
+          <th>Amount</th>
+          <th>Due Date</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bill of bills">
+          <td>{{ bill.biller }}</td>
+          <td>₹{{ bill.amount | number:'1.2-2' }}</td>
+          <td>{{ bill.dueDate | date:'MMM dd, yyyy' }}</td>
+          <td>
+            <span class="badge" [ngClass]="bill.status === 'PENDING' ? 'bg-warning' : 'bg-success'">
+              {{ bill.status }}
+            </span>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-primary" *ngIf="bill.status === 'PENDING'" (click)="payBill(bill.id)">
+              Pay Now
+            </button>
+            <span *ngIf="bill.status !== 'PENDING'" class="text-muted">Paid</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="!loading && bills.length === 0" class="alert alert-info">
+    No bills to display.
+  </div>
+</div>

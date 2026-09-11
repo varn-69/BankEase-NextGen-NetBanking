@@ -1,0 +1,51 @@
+<div class="container-fluid py-4">
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="h2">Investments</h1>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="alert alert-info">Loading investments...</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <!-- Portfolio Value Card -->
+  <div *ngIf="!loading" class="row mb-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body text-center">
+          <h5 class="card-title">Total Portfolio Value</h5>
+          <h2 class="text-primary">₹{{ portfolioValue | number:'1.2-2' }}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Investments List -->
+  <div *ngIf="!loading" class="row">
+    <div *ngFor="let investment of investments" class="col-md-4 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ investment.productName }}</h5>
+          <p class="card-text text-muted">{{ investment.investmentType }}</p>
+
+          <div class="row text-center mb-3">
+            <div class="col-6">
+              <small class="text-muted">Invested</small>
+              <p class="mb-0">₹{{ investment.amountInvested | number:'1.2-2' }}</p>
+            </div>
+            <div class="col-6">
+              <small class="text-muted">Current Value</small>
+              <p class="mb-0">₹{{ investment.currentValue | number:'1.2-2' }}</p>
+            </div>
+          </div>
+
+          <small class="text-muted d-block">Units: {{ investment.units }}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && investments.length === 0" class="alert alert-info">
+    No investments yet.
+  </div>
+</div>

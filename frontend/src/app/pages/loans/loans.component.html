@@ -1,0 +1,98 @@
+<div class="container-fluid py-4">
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center">
+        <h1 class="h2">Loans</h1>
+        <button class="btn btn-primary" (click)="showForm = !showForm">
+          <i class="fas fa-plus"></i> Apply for Loan
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger alert-dismissible fade show">
+    {{ error }}
+    <button type="button" class="btn-close" (click)="error = null"></button>
+  </div>
+  <div *ngIf="success" class="alert alert-success alert-dismissible fade show">
+    {{ success }}
+    <button type="button" class="btn-close" (click)="success = null"></button>
+  </div>
+
+  <!-- Apply for Loan Form -->
+  <div *ngIf="showForm" class="card mb-4">
+    <div class="card-header">
+      <h5>Apply for Loan</h5>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="loanForm" (ngSubmit)="applyForLoan()">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Loan Type</label>
+            <select class="form-control" formControlName="loanType">
+              <option *ngFor="let type of loanTypes" [value]="type">{{ type }}</option>
+            </select>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Principal Amount</label>
+            <input type="number" class="form-control" formControlName="principal" placeholder="Enter amount" step="1000">
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Tenure (Months)</label>
+          <input type="number" class="form-control" formControlName="tenureMonths" placeholder="Minimum 6 months" min="6">
+        </div>
+
+        <button type="submit" class="btn btn-success" [disabled]="!loanForm.valid || submitting">
+          <span *ngIf="!submitting">Apply Now</span>
+          <span *ngIf="submitting"><i class="fas fa-spinner fa-spin"></i> Submitting...</span>
+        </button>
+        <button type="button" class="btn btn-secondary ms-2" (click)="showForm = false">
+          Cancel
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Loans List -->
+  <div *ngIf="!loading" class="row">
+    <div *ngFor="let loan of loans" class="col-md-6 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <h5 class="card-title">{{ loan.loanType }}</h5>
+            <span class="badge" [ngClass]="{
+              'bg-warning': loan.status === 'PENDING',
+              'bg-success': loan.status === 'APPROVED',
+              'bg-danger': loan.status === 'REJECTED'
+            }">
+              {{ loan.status }}
+            </span>
+          </div>
+
+          <div class="row text-center mb-3">
+            <div class="col-4">
+              <small class="text-muted">Principal</small>
+              <p class="mb-0">₹{{ loan.principal | number:'1.0-0' }}</p>
+            </div>
+            <div class="col-4">
+              <small class="text-muted">EMI</small>
+              <p class="mb-0">₹{{ loan.emi | number:'1.2-2' }}</p>
+            </div>
+            <div class="col-4">
+              <small class="text-muted">Interest</small>
+              <p class="mb-0">{{ loan.interestRate }}%</p>
+            </div>
+          </div>
+
+          <small class="text-muted">{{ loan.tenureMonths }} months</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && loans.length === 0" class="alert alert-info">
+    No loans found.
+  </div>
+</div>

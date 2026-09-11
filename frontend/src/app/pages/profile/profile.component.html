@@ -1,0 +1,54 @@
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="card">
+        <div class="card-header">
+          <h5>My Profile</h5>
+        </div>
+        <div class="card-body" *ngIf="currentUser">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label"><strong>Username</strong></label>
+              <p class="text-muted">{{ currentUser.username }}</p>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label"><strong>Email</strong></label>
+              <p class="text-muted">{{ currentUser.email }}</p>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label"><strong>First Name</strong></label>
+              <p class="text-muted">{{ currentUser.firstName }}</p>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label"><strong>Last Name</strong></label>
+              <p class="text-muted">{{ currentUser.lastName }}</p>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label"><strong>Phone</strong></label>
+              <p class="text-muted">{{ currentUser.phone }}</p>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label"><strong>Role</strong></label>
+              <p class="text-muted">{{ currentUser.role }}</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <label class="form-label"><strong>Status</strong></label>
+              <p class="text-muted">
+                <span class="badge bg-success">{{ currentUser.status }}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

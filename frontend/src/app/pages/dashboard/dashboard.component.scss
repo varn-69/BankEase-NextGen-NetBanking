@@ -1,0 +1,33 @@
+.balance-card {
+  border-left: 4px solid #1f497d;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .card-title {
+    color: #6c757d;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+}
+
+.summary-card {
+  border: none;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  h4 {
+    font-weight: 700;
+    font-size: 1.75rem;
+  }
+
+  .card-text {
+    color: #6c757d;
+    font-size: 0.875rem;
+  }
+}

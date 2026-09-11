@@ -1,0 +1,86 @@
+<div class="container-fluid py-4">
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center">
+        <h1 class="h2">Beneficiaries</h1>
+        <button class="btn btn-primary" (click)="showForm = !showForm">
+          <i class="fas fa-plus"></i> Add Beneficiary
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger alert-dismissible fade show">
+    {{ error }}
+    <button type="button" class="btn-close" (click)="error = null"></button>
+  </div>
+  <div *ngIf="success" class="alert alert-success alert-dismissible fade show">
+    {{ success }}
+    <button type="button" class="btn-close" (click)="success = null"></button>
+  </div>
+
+  <!-- Add Beneficiary Form -->
+  <div *ngIf="showForm" class="card mb-4">
+    <div class="card-header">
+      <h5>Add New Beneficiary</h5>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="beneficiaryForm" (ngSubmit)="addBeneficiary()">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Beneficiary Name</label>
+            <input type="text" class="form-control" formControlName="name" placeholder="Enter name">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Account Number</label>
+            <input type="text" class="form-control" formControlName="accountNumber" placeholder="Enter account number">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Bank Name</label>
+            <input type="text" class="form-control" formControlName="bankName" placeholder="Enter bank name">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">IFSC Code</label>
+            <input type="text" class="form-control" formControlName="ifsc" placeholder="e.g., HDFC0000123">
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-success" [disabled]="!beneficiaryForm.valid || submitting">
+          <span *ngIf="!submitting">Add Beneficiary</span>
+          <span *ngIf="submitting"><i class="fas fa-spinner fa-spin"></i> Adding...</span>
+        </button>
+        <button type="button" class="btn btn-secondary ms-2" (click)="showForm = false">
+          Cancel
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Beneficiaries List -->
+  <div *ngIf="!loading" class="row">
+    <div *ngFor="let beneficiary of beneficiaries" class="col-md-6 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ beneficiary.name }}</h5>
+          <p class="card-text text-muted">{{ beneficiary.accountNumber }}</p>
+          <small class="text-muted">
+            {{ beneficiary.bankName }} | {{ beneficiary.ifsc }}
+          </small>
+          <div class="mt-3">
+            <span class="badge bg-success">{{ beneficiary.status }}</span>
+            <button class="btn btn-sm btn-danger float-end" (click)="deleteBeneficiary(beneficiary.id)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && beneficiaries.length === 0" class="alert alert-info">
+    No beneficiaries added yet.
+  </div>
+</div>

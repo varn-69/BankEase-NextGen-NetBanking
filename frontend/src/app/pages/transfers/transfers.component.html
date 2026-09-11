@@ -1,0 +1,64 @@
+<div class="container-fluid py-4">
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="h2">Fund Transfer</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="card">
+        <div class="card-header">
+          <h5>Transfer Funds</h5>
+        </div>
+        <div class="card-body">
+          <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+          <div *ngIf="success" class="alert alert-success">{{ success }}</div>
+
+          <form [formGroup]="transferForm" (ngSubmit)="initiateTransfer()">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">From Account</label>
+                <select class="form-control" formControlName="fromAccountId" [disabled]="loading">
+                  <option value="" disabled>Select account</option>
+                  <option *ngFor="let account of accounts" [value]="account.id">
+                    {{ account.accountType }} - ₹{{ account.balance | number:'1.2-2' }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">To Account</label>
+                <select class="form-control" formControlName="toAccountId" [disabled]="loading">
+                  <option value="" disabled>Select account</option>
+                  <option *ngFor="let account of accounts" [value]="account.id">
+                    {{ account.accountType }} - ₹{{ account.balance | number:'1.2-2' }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Amount</label>
+              <input type="number" class="form-control" formControlName="amount" placeholder="Enter amount" step="0.01">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Transaction PIN</label>
+              <input type="password" class="form-control" formControlName="transactionPin" placeholder="Enter 4-digit PIN">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Description (Optional)</label>
+              <textarea class="form-control" formControlName="description" placeholder="Enter transfer description" rows="3"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" [disabled]="!transferForm.valid || submitting || loading">
+              <span *ngIf="!submitting">Transfer Now</span>
+              <span *ngIf="submitting"><i class="fas fa-spinner fa-spin"></i> Processing...</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
