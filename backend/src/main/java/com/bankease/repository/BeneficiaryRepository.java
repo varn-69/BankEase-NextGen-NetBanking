@@ -7,6 +7,6 @@ import java.util.List;
 
 @Repository
 public interface BeneficiaryRepository extends JpaRepository<Beneficiary, Long> {
-    List<Beneficiary> findByUserId(Long userId);
     List<Beneficiary> findByUserIdAndStatus(Long userId, Beneficiary.BeneficiaryStatus status);
+    List<Beneficiary> findByUserId(Long userId);
 }
