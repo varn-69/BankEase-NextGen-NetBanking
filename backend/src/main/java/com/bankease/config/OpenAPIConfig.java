@@ -11,16 +11,18 @@ import org.springframework.context.annotation.Configuration;
 public class OpenAPIConfig {
     @Bean
     public OpenAPI customOpenAPI() {
+        SecurityScheme securityScheme = new SecurityScheme()
+                .type(SecurityScheme.Type.HTTP)
+                .scheme("bearer")
+                .bearerFormat("JWT");
+        
         return new OpenAPI()
                 .info(new Info()
                     .title("BankEase API")
                     .version("1.0.0")
                     .description("NextGen Net Banking Application API Documentation"))
                 .addSecurityItem(new SecurityRequirement().addList("Bearer Token"))
-                .getComponents().addSecuritySchemes("Bearer Token",
-                    new SecurityScheme()
-                        .type(SecurityScheme.Type.HTTP)
-                        .scheme("bearer")
-                        .bearerFormat("JWT"));
+                .components(new io.swagger.v3.oas.models.Components()
+                    .addSecuritySchemes("Bearer Token", securityScheme));
     }
 }

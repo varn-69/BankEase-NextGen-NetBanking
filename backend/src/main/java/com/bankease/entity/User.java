@@ -45,6 +45,7 @@ public class User {
     private UserStatus status;
 
     @Column(name = "failed_login_attempts")
+    @Builder.Default
     private Integer failedLoginAttempts = 0;
 
     @Column(name = "locked_until")
