@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/accounts")
+@RequestMapping("/accounts")
 @CrossOrigin(origins = "*")
 public class AccountController {
     @Autowired

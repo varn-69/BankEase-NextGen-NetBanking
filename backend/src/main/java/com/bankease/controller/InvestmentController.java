@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/investments")
+@RequestMapping("/investments")
 @CrossOrigin(origins = "*")
 public class InvestmentController {
     @Autowired

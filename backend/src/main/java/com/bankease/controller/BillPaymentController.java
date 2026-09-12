@@ -13,7 +13,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/bills")
+@RequestMapping("/bills")
 @CrossOrigin(origins = "*")
 public class BillPaymentController {
     @Autowired

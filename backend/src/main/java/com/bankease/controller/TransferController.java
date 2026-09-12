@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/transfers")
+@RequestMapping("/transfers")
 @CrossOrigin(origins = "*")
 public class TransferController {
     @Autowired

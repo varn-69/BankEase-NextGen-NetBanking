@@ -13,7 +13,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/loans")
+@RequestMapping("/loans")
 @CrossOrigin(origins = "*")
 public class LoanController {
     @Autowired
