@@ -1,5 +1,7 @@
 package com.bankease.exception;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -13,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
     @ExceptionHandler(ResourceNotFoundException.class)
@@ -106,6 +109,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleGlobalException(Exception ex, WebRequest request) {
+        logger.error("Unexpected error occurred: ", ex);
         ApiError apiError = ApiError.builder()
                 .timestamp(LocalDateTime.now().format(formatter))
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
