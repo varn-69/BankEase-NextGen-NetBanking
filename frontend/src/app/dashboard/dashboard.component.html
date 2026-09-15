@@ -1,0 +1,105 @@
+<div class="dashboard-container">
+  <app-sidebar></app-sidebar>
+  
+  <div class="main-content">
+    <div class="header">
+      <h1>Dashboard</h1>
+      <p>Welcome back, {{ currentUser?.firstName || 'User' }}!</p>
+    </div>
+
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Loading dashboard data...</p>
+    </div>
+
+    <div *ngIf="!loading && dashboardData" class="dashboard-content">
+      <!-- Summary Cards -->
+      <div class="summary-cards">
+        <mat-card class="summary-card">
+          <mat-card-header>
+            <mat-card-title>Total Balance</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="amount">{{ formatCurrency(dashboardData.totalBalance) }}</div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="summary-card">
+          <mat-card-header>
+            <mat-card-title>Savings</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="amount">{{ formatCurrency(dashboardData.savingsBalance) }}</div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="summary-card">
+          <mat-card-header>
+            <mat-card-title>Current</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="amount">{{ formatCurrency(dashboardData.currentBalance) }}</div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="summary-card">
+          <mat-card-header>
+            <mat-card-title>Investments</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="amount">{{ formatCurrency(dashboardData.investmentPortfolioValue) }}</div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <!-- Secondary Stats -->
+      <div class="stats-row">
+        <mat-card class="stat-card">
+          <mat-card-content>
+            <div class="stat-icon">
+              <mat-icon>account_balance</mat-icon>
+            </div>
+            <div class="stat-info">
+              <div class="stat-value">{{ dashboardData.accountCount }}</div>
+              <div class="stat-label">Accounts</div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="stat-card">
+          <mat-card-content>
+            <div class="stat-icon">
+              <mat-icon>receipt</mat-icon>
+            </div>
+            <div class="stat-info">
+              <div class="stat-value">{{ dashboardData.pendingBills }}</div>
+              <div class="stat-label">Pending Bills</div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="stat-card">
+          <mat-card-content>
+            <div class="stat-icon">
+              <mat-icon>payments</mat-icon>
+            </div>
+            <div class="stat-info">
+              <div class="stat-value">{{ dashboardData.activeLoans }}</div>
+              <div class="stat-label">Active Loans</div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <!-- Last Login -->
+      <mat-card class="info-card">
+        <mat-card-header>
+          <mat-card-title>Last Login</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{ formatDate(dashboardData.lastLogin) }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

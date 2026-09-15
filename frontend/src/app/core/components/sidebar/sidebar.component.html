@@ -1,0 +1,23 @@
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <h2>BankEase</h2>
+    <p>{{ getCurrentUser()?.firstName || 'User' }}</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div *ngFor="let item of menuItems" 
+         class="nav-item"
+         [class.active]="router.url === item.route"
+         (click)="navigate(item.route)">
+      <mat-icon>{{ item.icon }}</mat-icon>
+      <span>{{ item.label }}</span>
+    </div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <button mat-button (click)="logout()" class="logout-btn">
+      <mat-icon>logout</mat-icon>
+      Logout
+    </button>
+  </div>
+</aside>
