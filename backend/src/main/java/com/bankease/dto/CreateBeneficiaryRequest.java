@@ -1,12 +1,7 @@
 package com.bankease.dto;
 
-import lombok.*;
 import jakarta.validation.constraints.NotBlank;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class CreateBeneficiaryRequest {
     @NotBlank(message = "Beneficiary name is required")
     private String name;
@@ -19,4 +14,19 @@ public class CreateBeneficiaryRequest {
 
     @NotBlank(message = "IFSC code is required")
     private String ifsc;
+
+    public CreateBeneficiaryRequest() {
+    }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getAccountNumber() { return accountNumber; }
+    public void setAccountNumber(String accountNumber) { this.accountNumber = accountNumber; }
+
+    public String getBankName() { return bankName; }
+    public void setBankName(String bankName) { this.bankName = bankName; }
+
+    public String getIfsc() { return ifsc; }
+    public void setIfsc(String ifsc) { this.ifsc = ifsc; }
 }

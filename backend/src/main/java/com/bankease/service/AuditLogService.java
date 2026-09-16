@@ -22,14 +22,13 @@ public class AuditLogService {
             user = userRepository.findById(userId).orElse(null);
         }
 
-        AuditLog log = AuditLog.builder()
-                .user(user)
-                .action(action)
-                .entityType(entityType)
-                .entityId(entityId)
-                .timestamp(LocalDateTime.now())
-                .details(details)
-                .build();
+        AuditLog log = new AuditLog();
+        log.setUser(user);
+        log.setAction(action);
+        log.setEntityType(entityType);
+        log.setEntityId(entityId);
+        log.setTimestamp(LocalDateTime.now());
+        log.setDetails(details);
 
         auditLogRepository.save(log);
     }

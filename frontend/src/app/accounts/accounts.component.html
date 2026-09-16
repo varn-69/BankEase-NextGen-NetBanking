@@ -1,10 +1,56 @@
 <div class="accounts-container">
   <app-sidebar></app-sidebar>
+  
   <div class="main-content">
     <div class="header">
       <h1>Accounts</h1>
       <p>Manage your bank accounts</p>
+      <button mat-raised-button color="primary" (click)="openCreateAccountDialog()">
+        <mat-icon>add</mat-icon>
+        Create Account
+      </button>
     </div>
-    <p>Accounts page - Coming soon</p>
+
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Loading accounts...</p>
+    </div>
+
+    <div *ngIf="error" class="error-container">
+      <mat-card class="error-card">
+        <mat-card-content>
+          <p>{{ error }}</p>
+          <button mat-button (click)="loadAccounts()">Retry</button>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div *ngIf="!loading && !error && accounts.length === 0" class="empty-state">
+      <mat-icon>account_balance</mat-icon>
+      <h3>No Accounts Found</h3>
+      <p>You don't have any bank accounts yet. Create your first account to get started.</p>
+      <button mat-raised-button color="primary" (click)="openCreateAccountDialog()">
+        Create Account
+      </button>
+    </div>
+
+    <div *ngIf="!loading && !error && accounts.length > 0" class="accounts-grid">
+      <mat-card *ngFor="let account of accounts" class="account-card">
+        <mat-card-header>
+          <mat-card-title>{{ account.accountType }}</mat-card-title>
+          <mat-card-subtitle>{{ account.accountNumber }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="account-balance">
+            <span class="balance-label">Balance</span>
+            <span class="balance-amount">{{ formatCurrency(account.balance) }}</span>
+          </div>
+          <div class="account-status">
+            <span class="status-indicator" [style.color]="getAccountStatusColor(account.status)"></span>
+            <span class="status-text">{{ account.status }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
 </div>

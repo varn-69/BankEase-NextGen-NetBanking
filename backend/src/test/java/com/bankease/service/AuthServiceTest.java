@@ -49,32 +49,29 @@ public class AuthServiceTest {
 
     @BeforeEach
     void setUp() {
-        validRegisterRequest = RegisterRequest.builder()
-                .username("testuser")
-                .email("test@example.com")
-                .password("password123")
-                .firstName("Test")
-                .lastName("User")
-                .phone("1234567890")
-                .build();
+        validRegisterRequest = new RegisterRequest();
+        validRegisterRequest.setUsername("testuser");
+        validRegisterRequest.setEmail("test@example.com");
+        validRegisterRequest.setPassword("password123");
+        validRegisterRequest.setFirstName("Test");
+        validRegisterRequest.setLastName("User");
+        validRegisterRequest.setPhone("1234567890");
 
-        validLoginRequest = LoginRequest.builder()
-                .username("testuser")
-                .password("password123")
-                .build();
+        validLoginRequest = new LoginRequest();
+        validLoginRequest.setUsername("testuser");
+        validLoginRequest.setPassword("password123");
 
-        mockUser = User.builder()
-                .id(1L)
-                .username("testuser")
-                .email("test@example.com")
-                .password("$2a$10$encodedPassword")
-                .firstName("Test")
-                .lastName("User")
-                .phone("1234567890")
-                .role(User.Role.CUSTOMER)
-                .status(User.UserStatus.ACTIVE)
-                .failedLoginAttempts(0)
-                .build();
+        mockUser = new User();
+        mockUser.setId(1L);
+        mockUser.setUsername("testuser");
+        mockUser.setEmail("test@example.com");
+        mockUser.setPassword("$2a$10$encodedPassword");
+        mockUser.setFirstName("Test");
+        mockUser.setLastName("User");
+        mockUser.setPhone("1234567890");
+        mockUser.setRole(User.Role.CUSTOMER);
+        mockUser.setStatus(User.UserStatus.ACTIVE);
+        mockUser.setFailedLoginAttempts(0);
     }
 
     @Test

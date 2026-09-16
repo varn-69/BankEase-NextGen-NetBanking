@@ -25,13 +25,12 @@ public class AccountController {
             Authentication authentication) {
         Long userId = Long.parseLong(authentication.getName());
         Account account = accountService.createAccount(userId, accountType, initialBalance);
-        AccountDTO dto = AccountDTO.builder()
-                .id(account.getId())
-                .accountNumber(account.getAccountNumber())
-                .accountType(account.getAccountType().toString())
-                .balance(account.getBalance())
-                .status(account.getStatus().toString())
-                .build();
+        AccountDTO dto = new AccountDTO();
+        dto.setId(account.getId());
+        dto.setAccountNumber(account.getAccountNumber());
+        dto.setAccountType(account.getAccountType().toString());
+        dto.setBalance(account.getBalance());
+        dto.setStatus(account.getStatus().toString());
         return new ResponseEntity<>(dto, HttpStatus.CREATED);
     }
 

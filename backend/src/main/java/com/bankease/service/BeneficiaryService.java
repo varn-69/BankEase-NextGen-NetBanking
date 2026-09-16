@@ -24,14 +24,13 @@ public class BeneficiaryService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        Beneficiary beneficiary = Beneficiary.builder()
-                .user(user)
-                .name(request.getName())
-                .accountNumber(request.getAccountNumber())
-                .bankName(request.getBankName())
-                .ifsc(request.getIfsc())
-                .status(Beneficiary.BeneficiaryStatus.ACTIVE)
-                .build();
+        Beneficiary beneficiary = new Beneficiary();
+        beneficiary.setUser(user);
+        beneficiary.setName(request.getName());
+        beneficiary.setAccountNumber(request.getAccountNumber());
+        beneficiary.setBankName(request.getBankName());
+        beneficiary.setIfsc(request.getIfsc());
+        beneficiary.setStatus(Beneficiary.BeneficiaryStatus.ACTIVE);
 
         Beneficiary saved = beneficiaryRepository.save(beneficiary);
         return convertToDTO(saved);
@@ -58,13 +57,13 @@ public class BeneficiaryService {
     }
 
     private BeneficiaryDTO convertToDTO(Beneficiary beneficiary) {
-        return BeneficiaryDTO.builder()
-                .id(beneficiary.getId())
-                .name(beneficiary.getName())
-                .accountNumber(beneficiary.getAccountNumber())
-                .bankName(beneficiary.getBankName())
-                .ifsc(beneficiary.getIfsc())
-                .status(beneficiary.getStatus().toString())
-                .build();
+        BeneficiaryDTO dto = new BeneficiaryDTO();
+        dto.setId(beneficiary.getId());
+        dto.setName(beneficiary.getName());
+        dto.setAccountNumber(beneficiary.getAccountNumber());
+        dto.setBankName(beneficiary.getBankName());
+        dto.setIfsc(beneficiary.getIfsc());
+        dto.setStatus(beneficiary.getStatus().toString());
+        return dto;
     }
 }

@@ -52,15 +52,15 @@ public class DashboardService {
 
         BigDecimal investmentValue = investmentService.getPortfolioValue(userId);
 
-        return DashboardDTO.builder()
-                .totalBalance(totalBalance)
-                .savingsBalance(savingsBalance)
-                .currentBalance(currentBalance)
-                .accountCount((long) accounts.size())
-                .pendingBills((long) pendingBills.size())
-                .activeLoans(activeLoans)
-                .investmentPortfolioValue(investmentValue)
-                .lastLogin(java.time.LocalDateTime.now())
-                .build();
+        DashboardDTO dto = new DashboardDTO();
+        dto.setTotalBalance(totalBalance);
+        dto.setSavingsBalance(savingsBalance);
+        dto.setCurrentBalance(currentBalance);
+        dto.setAccountCount((long) accounts.size());
+        dto.setPendingBills((long) pendingBills.size());
+        dto.setActiveLoans(activeLoans);
+        dto.setInvestmentPortfolioValue(investmentValue);
+        dto.setLastLogin(java.time.LocalDateTime.now());
+        return dto;
     }
 }

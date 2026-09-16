@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DashboardService } from '../../core/services/dashboard.service';
-import { DashboardDTO } from '../../core/models/dashboard.models';
-import { AuthService } from '../../core/services/auth.service';
+import { DashboardService } from '../core/services/dashboard.service';
+import { DashboardDTO } from '../core/models/dashboard.models';
+import { AuthService } from '../core/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -28,11 +28,11 @@ export class DashboardComponent implements OnInit {
 
   loadDashboard(): void {
     this.dashboardService.getDashboard().subscribe({
-      next: (data) => {
+      next: (data: DashboardDTO) => {
         this.dashboardData = data;
         this.loading = false;
       },
-      error: (error) => {
+      error: (error: any) => {
         this.loading = false;
         this.snackBar.open('Failed to load dashboard data', 'Close', { duration: 5000 });
       }

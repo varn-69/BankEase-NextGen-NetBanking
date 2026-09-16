@@ -24,26 +24,24 @@ public class AuthServiceIntegrationTest {
 
     @Test
     void testDuplicateUsername() {
-        RegisterRequest request1 = RegisterRequest.builder()
-                .username("duplicateuser")
-                .email("duplicate1@example.com")
-                .password("password123")
-                .firstName("Duplicate")
-                .lastName("User1")
-                .phone("1111111111")
-                .build();
+        RegisterRequest request1 = new RegisterRequest();
+        request1.setUsername("duplicateuser");
+        request1.setEmail("duplicate1@example.com");
+        request1.setPassword("password123");
+        request1.setFirstName("Duplicate");
+        request1.setLastName("User1");
+        request1.setPhone("1111111111");
 
-        User user1 = User.builder()
-                .username(request1.getUsername())
-                .email(request1.getEmail())
-                .password(passwordEncoder.encode(request1.getPassword()))
-                .firstName(request1.getFirstName())
-                .lastName(request1.getLastName())
-                .phone(request1.getPhone())
-                .role(User.Role.CUSTOMER)
-                .status(User.UserStatus.ACTIVE)
-                .failedLoginAttempts(0)
-                .build();
+        User user1 = new User();
+        user1.setUsername(request1.getUsername());
+        user1.setEmail(request1.getEmail());
+        user1.setPassword(passwordEncoder.encode(request1.getPassword()));
+        user1.setFirstName(request1.getFirstName());
+        user1.setLastName(request1.getLastName());
+        user1.setPhone(request1.getPhone());
+        user1.setRole(User.Role.CUSTOMER);
+        user1.setStatus(User.UserStatus.ACTIVE);
+        user1.setFailedLoginAttempts(0);
 
         userRepository.save(user1);
 
@@ -52,26 +50,24 @@ public class AuthServiceIntegrationTest {
 
     @Test
     void testDuplicateEmail() {
-        RegisterRequest request1 = RegisterRequest.builder()
-                .username("user1")
-                .email("duplicateemail@example.com")
-                .password("password123")
-                .firstName("User")
-                .lastName("One")
-                .phone("3333333333")
-                .build();
+        RegisterRequest request1 = new RegisterRequest();
+        request1.setUsername("user1");
+        request1.setEmail("duplicateemail@example.com");
+        request1.setPassword("password123");
+        request1.setFirstName("User");
+        request1.setLastName("One");
+        request1.setPhone("3333333333");
 
-        User user1 = User.builder()
-                .username(request1.getUsername())
-                .email(request1.getEmail())
-                .password(passwordEncoder.encode(request1.getPassword()))
-                .firstName(request1.getFirstName())
-                .lastName(request1.getLastName())
-                .phone(request1.getPhone())
-                .role(User.Role.CUSTOMER)
-                .status(User.UserStatus.ACTIVE)
-                .failedLoginAttempts(0)
-                .build();
+        User user1 = new User();
+        user1.setUsername(request1.getUsername());
+        user1.setEmail(request1.getEmail());
+        user1.setPassword(passwordEncoder.encode(request1.getPassword()));
+        user1.setFirstName(request1.getFirstName());
+        user1.setLastName(request1.getLastName());
+        user1.setPhone(request1.getPhone());
+        user1.setRole(User.Role.CUSTOMER);
+        user1.setStatus(User.UserStatus.ACTIVE);
+        user1.setFailedLoginAttempts(0);
 
         userRepository.save(user1);
 
@@ -92,26 +88,24 @@ public class AuthServiceIntegrationTest {
 
     @Test
     void testUserCreation() {
-        RegisterRequest request = RegisterRequest.builder()
-                .username("integrationtest")
-                .email("integrationtest@example.com")
-                .password("password123")
-                .firstName("Integration")
-                .lastName("Test")
-                .phone("9998887777")
-                .build();
+        RegisterRequest request = new RegisterRequest();
+        request.setUsername("integrationtest");
+        request.setEmail("integrationtest@example.com");
+        request.setPassword("password123");
+        request.setFirstName("Integration");
+        request.setLastName("Test");
+        request.setPhone("9998887777");
 
-        User user = User.builder()
-                .username(request.getUsername())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .phone(request.getPhone())
-                .role(User.Role.CUSTOMER)
-                .status(User.UserStatus.ACTIVE)
-                .failedLoginAttempts(0)
-                .build();
+        User user = new User();
+        user.setUsername(request.getUsername());
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setPhone(request.getPhone());
+        user.setRole(User.Role.CUSTOMER);
+        user.setStatus(User.UserStatus.ACTIVE);
+        user.setFailedLoginAttempts(0);
 
         User savedUser = userRepository.save(user);
 

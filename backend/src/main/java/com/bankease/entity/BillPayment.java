@@ -1,16 +1,11 @@
 package com.bankease.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "bill_payments")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class BillPayment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,4 +28,33 @@ public class BillPayment {
 
     @Column(name = "paid_at")
     private LocalDateTime paidAt;
+
+    public BillPayment() {
+    }
+
+    public BillPayment(Bill bill, Account account, BigDecimal amount, Transaction transaction, LocalDateTime paidAt) {
+        this.bill = bill;
+        this.account = account;
+        this.amount = amount;
+        this.transaction = transaction;
+        this.paidAt = paidAt;
+    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public Bill getBill() { return bill; }
+    public void setBill(Bill bill) { this.bill = bill; }
+
+    public Account getAccount() { return account; }
+    public void setAccount(Account account) { this.account = account; }
+
+    public BigDecimal getAmount() { return amount; }
+    public void setAmount(BigDecimal amount) { this.amount = amount; }
+
+    public Transaction getTransaction() { return transaction; }
+    public void setTransaction(Transaction transaction) { this.transaction = transaction; }
+
+    public LocalDateTime getPaidAt() { return paidAt; }
+    public void setPaidAt(LocalDateTime paidAt) { this.paidAt = paidAt; }
 }

@@ -81,15 +81,14 @@ public class TransferService {
 
         // Create transaction record
         String reference = TransactionRefGenerator.generate();
-        Transaction transaction = Transaction.builder()
-                .transactionReference(reference)
-                .senderAccount(fromAccount)
-                .receiverAccount(toAccount)
-                .amount(request.getAmount())
-                .transactionType(Transaction.TransactionType.TRANSFER)
-                .status(Transaction.TransactionStatus.SUCCESS)
-                .description(request.getDescription())
-                .build();
+        Transaction transaction = new Transaction();
+        transaction.setTransactionReference(reference);
+        transaction.setSenderAccount(fromAccount);
+        transaction.setReceiverAccount(toAccount);
+        transaction.setAmount(request.getAmount());
+        transaction.setTransactionType(Transaction.TransactionType.TRANSFER);
+        transaction.setStatus(Transaction.TransactionStatus.SUCCESS);
+        transaction.setDescription(request.getDescription());
 
         Transaction saved = transactionRepository.save(transaction);
 
@@ -102,14 +101,14 @@ public class TransferService {
     }
 
     private TransactionDTO convertToDTO(Transaction transaction) {
-        return TransactionDTO.builder()
-                .id(transaction.getId())
-                .transactionReference(transaction.getTransactionReference())
-                .amount(transaction.getAmount())
-                .transactionType(transaction.getTransactionType().toString())
-                .status(transaction.getStatus().toString())
-                .description(transaction.getDescription())
-                .createdAt(transaction.getCreatedAt())
-                .build();
+        TransactionDTO dto = new TransactionDTO();
+        dto.setId(transaction.getId());
+        dto.setTransactionReference(transaction.getTransactionReference());
+        dto.setAmount(transaction.getAmount());
+        dto.setTransactionType(transaction.getTransactionType().toString());
+        dto.setStatus(transaction.getStatus().toString());
+        dto.setDescription(transaction.getDescription());
+        dto.setCreatedAt(transaction.getCreatedAt().toString());
+        return dto;
     }
 }

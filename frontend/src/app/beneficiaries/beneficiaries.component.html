@@ -1,10 +1,70 @@
 <div class="beneficiaries-container">
   <app-sidebar></app-sidebar>
+  
   <div class="main-content">
     <div class="header">
       <h1>Beneficiaries</h1>
       <p>Manage your transfer beneficiaries</p>
+      <button mat-raised-button color="primary" (click)="openAddBeneficiaryDialog()">
+        <mat-icon>add</mat-icon>
+        Add Beneficiary
+      </button>
     </div>
-    <p>Beneficiaries page - Coming soon</p>
+
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Loading beneficiaries...</p>
+    </div>
+
+    <div *ngIf="error" class="error-container">
+      <mat-card class="error-card">
+        <mat-card-content>
+          <p>{{ error }}</p>
+          <button mat-button (click)="loadBeneficiaries()">Retry</button>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div *ngIf="!loading && !error && beneficiaries.length === 0" class="empty-state">
+      <mat-icon>people</mat-icon>
+      <h3>No Beneficiaries Found</h3>
+      <p>You haven't added any beneficiaries yet. Add beneficiaries to quickly transfer money to them.</p>
+      <button mat-raised-button color="primary" (click)="openAddBeneficiaryDialog()">
+        Add Beneficiary
+      </button>
+    </div>
+
+    <div *ngIf="!loading && !error && beneficiaries.length > 0" class="beneficiaries-list">
+      <mat-card *ngFor="let beneficiary of beneficiaries" class="beneficiary-card">
+        <mat-card-header>
+          <mat-card-title>{{ beneficiary.name }}</mat-card-title>
+          <mat-card-subtitle>{{ beneficiary.bankName }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="beneficiary-details">
+            <div class="detail-row">
+              <span class="label">Account Number:</span>
+              <span class="value">{{ beneficiary.accountNumber }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">IFSC Code:</span>
+              <span class="value">{{ beneficiary.ifsc }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">Status:</span>
+              <span class="status-badge" [style.color]="getStatusColor(beneficiary.status)">
+                {{ beneficiary.status }}
+              </span>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-button color="warn" (click)="confirmDeleteBeneficiary(beneficiary)">
+            <mat-icon>delete</mat-icon>
+            Delete
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
   </div>
 </div>

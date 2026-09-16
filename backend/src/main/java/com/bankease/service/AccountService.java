@@ -30,13 +30,12 @@ public class AccountService {
             accountNumber = AccountNumberGenerator.generate();
         }
 
-        Account account = Account.builder()
-                .accountNumber(accountNumber)
-                .user(user)
-                .accountType(accountType)
-                .balance(initialBalance)
-                .status(Account.AccountStatus.ACTIVE)
-                .build();
+        Account account = new Account();
+        account.setAccountNumber(accountNumber);
+        account.setUser(user);
+        account.setAccountType(accountType);
+        account.setBalance(initialBalance);
+        account.setStatus(Account.AccountStatus.ACTIVE);
 
         return accountRepository.save(account);
     }
@@ -69,12 +68,12 @@ public class AccountService {
     }
 
     private AccountDTO convertToDTO(Account account) {
-        return AccountDTO.builder()
-                .id(account.getId())
-                .accountNumber(account.getAccountNumber())
-                .accountType(account.getAccountType().toString())
-                .balance(account.getBalance())
-                .status(account.getStatus().toString())
-                .build();
+        AccountDTO dto = new AccountDTO();
+        dto.setId(account.getId());
+        dto.setAccountNumber(account.getAccountNumber());
+        dto.setAccountType(account.getAccountType().toString());
+        dto.setBalance(account.getBalance());
+        dto.setStatus(account.getStatus().toString());
+        return dto;
     }
 }

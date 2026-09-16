@@ -40,17 +40,16 @@ public class LoanService {
         BigDecimal interestRate = LOAN_RATES.getOrDefault(request.getLoanType(), new BigDecimal("10.0"));
         BigDecimal emi = calculateEMI(request.getPrincipal(), interestRate, request.getTenureMonths());
 
-        Loan loan = Loan.builder()
-                .user(user)
-                .loanType(request.getLoanType())
-                .principal(request.getPrincipal())
-                .interestRate(interestRate)
-                .tenureMonths(request.getTenureMonths())
-                .emi(emi)
-                .outstandingAmount(request.getPrincipal())
-                .status(Loan.LoanStatus.PENDING)
-                .appliedAt(LocalDateTime.now())
-                .build();
+        Loan loan = new Loan();
+        loan.setUser(user);
+        loan.setLoanType(request.getLoanType());
+        loan.setPrincipal(request.getPrincipal());
+        loan.setInterestRate(interestRate);
+        loan.setTenureMonths(request.getTenureMonths());
+        loan.setEmi(emi);
+        loan.setOutstandingAmount(request.getPrincipal());
+        loan.setStatus(Loan.LoanStatus.PENDING);
+        loan.setAppliedAt(LocalDateTime.now());
 
         Loan saved = loanRepository.save(loan);
 
@@ -108,17 +107,17 @@ public class LoanService {
     }
 
     private LoanDTO convertToDTO(Loan loan) {
-        return LoanDTO.builder()
-                .id(loan.getId())
-                .loanType(loan.getLoanType())
-                .principal(loan.getPrincipal())
-                .interestRate(loan.getInterestRate())
-                .tenureMonths(loan.getTenureMonths())
-                .emi(loan.getEmi())
-                .outstandingAmount(loan.getOutstandingAmount())
-                .status(loan.getStatus().toString())
-                .appliedAt(loan.getAppliedAt())
-                .approvedAt(loan.getApprovedAt())
-                .build();
+        LoanDTO dto = new LoanDTO();
+        dto.setId(loan.getId());
+        dto.setLoanType(loan.getLoanType());
+        dto.setPrincipal(loan.getPrincipal());
+        dto.setInterestRate(loan.getInterestRate());
+        dto.setTenureMonths(loan.getTenureMonths());
+        dto.setEmi(loan.getEmi());
+        dto.setOutstandingAmount(loan.getOutstandingAmount());
+        dto.setStatus(loan.getStatus().toString());
+        dto.setAppliedAt(loan.getAppliedAt() != null ? loan.getAppliedAt().toString() : null);
+        dto.setApprovedAt(loan.getApprovedAt() != null ? loan.getApprovedAt().toString() : null);
+        return dto;
     }
 }

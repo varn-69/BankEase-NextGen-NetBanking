@@ -5,7 +5,7 @@ export interface TransactionDTO {
   transactionType: string;
   status: string;
   description: string;
-  createdAt: string;
+  createdAt: string; // Backend sends LocalDateTime, we'll parse as string
 }
 
 export interface TransferRequest {

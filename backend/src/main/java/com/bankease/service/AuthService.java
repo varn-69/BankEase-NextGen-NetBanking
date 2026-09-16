@@ -41,17 +41,16 @@ public class AuthService {
             throw new DuplicateResourceException("Email already exists: " + request.getEmail());
         }
 
-        User user = User.builder()
-                .username(request.getUsername())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .phone(request.getPhone())
-                .role(User.Role.CUSTOMER)
-                .status(User.UserStatus.ACTIVE)
-                .failedLoginAttempts(0)
-                .build();
+        User user = new User();
+        user.setUsername(request.getUsername());
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setPhone(request.getPhone());
+        user.setRole(User.Role.CUSTOMER);
+        user.setStatus(User.UserStatus.ACTIVE);
+        user.setFailedLoginAttempts(0);
 
         User savedUser = userRepository.save(user);
 
@@ -59,13 +58,13 @@ public class AuthService {
 
         auditLogService.log(savedUser.getId(), "REGISTER", "USER", savedUser.getId(), "User registered");
 
-        return AuthResponse.builder()
-                .token(token)
-                .userId(savedUser.getId())
-                .username(savedUser.getUsername())
-                .email(savedUser.getEmail())
-                .role(savedUser.getRole().toString())
-                .build();
+        AuthResponse response = new AuthResponse();
+        response.setToken(token);
+        response.setUserId(savedUser.getId());
+        response.setUsername(savedUser.getUsername());
+        response.setEmail(savedUser.getEmail());
+        response.setRole(savedUser.getRole().toString());
+        return response;
     }
 
     public AuthResponse login(LoginRequest request) {
@@ -94,13 +93,13 @@ public class AuthService {
 
             auditLogService.log(user.getId(), "LOGIN", "USER", user.getId(), "User logged in");
 
-            return AuthResponse.builder()
-                    .token(token)
-                    .userId(user.getId())
-                    .username(user.getUsername())
-                    .email(user.getEmail())
-                    .role(user.getRole().toString())
-                    .build();
+            AuthResponse response = new AuthResponse();
+            response.setToken(token);
+            response.setUserId(user.getId());
+            response.setUsername(user.getUsername());
+            response.setEmail(user.getEmail());
+            response.setRole(user.getRole().toString());
+            return response;
         } catch (BadCredentialsException e) {
             user.setFailedLoginAttempts(user.getFailedLoginAttempts() + 1);
             if (user.getFailedLoginAttempts() >= 5) {

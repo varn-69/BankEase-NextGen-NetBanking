@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Bill, BillPaymentRequest, TransactionDTO } from '../models/bill.models';
+import { Bill, BillPaymentRequest } from '../models/bill.models';
+import { TransactionDTO } from '../models/transaction.models';
 import { environment } from '../../../environments/environment';
 
 @Injectable({

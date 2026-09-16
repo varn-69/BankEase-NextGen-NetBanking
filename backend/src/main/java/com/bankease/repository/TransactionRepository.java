@@ -9,4 +9,6 @@ import java.util.List;
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
     List<Transaction> findBySenderAccountId(Long accountId);
     List<Transaction> findByReceiverAccountId(Long accountId);
+    List<Transaction> findBySenderAccountIdIn(List<Long> accountIds);
+    List<Transaction> findByReceiverAccountIdIn(List<Long> accountIds);
 }

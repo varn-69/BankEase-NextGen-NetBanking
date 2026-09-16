@@ -67,14 +67,13 @@ public class InvestmentService {
 
         // Create transaction
         String reference = TransactionRefGenerator.generate();
-        Transaction transaction = Transaction.builder()
-                .transactionReference(reference)
-                .senderAccount(account)
-                .amount(request.getAmount())
-                .transactionType(Transaction.TransactionType.INVESTMENT)
-                .status(Transaction.TransactionStatus.SUCCESS)
-                .description("Investment in " + request.getInvestmentType())
-                .build();
+        Transaction transaction = new Transaction();
+        transaction.setTransactionReference(reference);
+        transaction.setSenderAccount(account);
+        transaction.setAmount(request.getAmount());
+        transaction.setTransactionType(Transaction.TransactionType.INVESTMENT);
+        transaction.setStatus(Transaction.TransactionStatus.SUCCESS);
+        transaction.setDescription("Investment in " + request.getInvestmentType());
 
         transactionRepository.save(transaction);
 
@@ -82,15 +81,14 @@ public class InvestmentService {
         BigDecimal units = request.getAmount().divide(new BigDecimal("100"), 2, java.math.RoundingMode.HALF_UP);
         BigDecimal currentValue = request.getAmount();
 
-        Investment investment = Investment.builder()
-                .user(account.getUser())
-                .investmentType(request.getInvestmentType())
-                .productName(request.getProductName())
-                .amountInvested(request.getAmount())
-                .units(units)
-                .purchasePrice(new BigDecimal("100"))
-                .currentValue(currentValue)
-                .build();
+        Investment investment = new Investment();
+        investment.setUser(account.getUser());
+        investment.setInvestmentType(request.getInvestmentType());
+        investment.setProductName(request.getProductName());
+        investment.setAmountInvested(request.getAmount());
+        investment.setUnits(units);
+        investment.setPurchasePrice(new BigDecimal("100"));
+        investment.setCurrentValue(currentValue);
 
         Investment saved = investmentRepository.save(investment);
 
@@ -113,15 +111,15 @@ public class InvestmentService {
     }
 
     private InvestmentDTO convertToDTO(Investment investment) {
-        return InvestmentDTO.builder()
-                .id(investment.getId())
-                .investmentType(investment.getInvestmentType())
-                .productName(investment.getProductName())
-                .amountInvested(investment.getAmountInvested())
-                .units(investment.getUnits())
-                .purchasePrice(investment.getPurchasePrice())
-                .currentValue(investment.getCurrentValue())
-                .createdAt(investment.getCreatedAt())
-                .build();
+        InvestmentDTO dto = new InvestmentDTO();
+        dto.setId(investment.getId());
+        dto.setInvestmentType(investment.getInvestmentType());
+        dto.setProductName(investment.getProductName());
+        dto.setAmountInvested(investment.getAmountInvested());
+        dto.setUnits(investment.getUnits());
+        dto.setPurchasePrice(investment.getPurchasePrice());
+        dto.setCurrentValue(investment.getCurrentValue());
+        dto.setCreatedAt(investment.getCreatedAt().toString());
+        return dto;
     }
 }

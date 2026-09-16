@@ -75,25 +75,23 @@ public class BillPaymentService {
 
         // Create transaction
         String reference = TransactionRefGenerator.generate();
-        Transaction transaction = Transaction.builder()
-                .transactionReference(reference)
-                .senderAccount(account)
-                .amount(bill.getAmount())
-                .transactionType(Transaction.TransactionType.BILL_PAYMENT)
-                .status(Transaction.TransactionStatus.SUCCESS)
-                .description("Bill payment: " + bill.getBiller())
-                .build();
+        Transaction transaction = new Transaction();
+        transaction.setTransactionReference(reference);
+        transaction.setSenderAccount(account);
+        transaction.setAmount(bill.getAmount());
+        transaction.setTransactionType(Transaction.TransactionType.BILL_PAYMENT);
+        transaction.setStatus(Transaction.TransactionStatus.SUCCESS);
+        transaction.setDescription("Bill payment: " + bill.getBiller());
 
         Transaction savedTransaction = transactionRepository.save(transaction);
 
         // Record bill payment
-        BillPayment billPayment = BillPayment.builder()
-                .bill(bill)
-                .account(account)
-                .amount(bill.getAmount())
-                .transaction(savedTransaction)
-                .paidAt(LocalDateTime.now())
-                .build();
+        BillPayment billPayment = new BillPayment();
+        billPayment.setBill(bill);
+        billPayment.setAccount(account);
+        billPayment.setAmount(bill.getAmount());
+        billPayment.setTransaction(savedTransaction);
+        billPayment.setPaidAt(LocalDateTime.now());
 
         billPaymentRepository.save(billPayment);
 
@@ -105,14 +103,14 @@ public class BillPaymentService {
         auditLogService.log(userId, "BILL_PAYMENT", "BILL", bill.getId(),
                 "Bill payment of ₹" + bill.getAmount() + " to " + bill.getBiller());
 
-        return TransactionDTO.builder()
-                .id(savedTransaction.getId())
-                .transactionReference(savedTransaction.getTransactionReference())
-                .amount(savedTransaction.getAmount())
-                .transactionType(savedTransaction.getTransactionType().toString())
-                .status(savedTransaction.getStatus().toString())
-                .description(savedTransaction.getDescription())
-                .createdAt(savedTransaction.getCreatedAt())
-                .build();
+        TransactionDTO dto = new TransactionDTO();
+        dto.setId(savedTransaction.getId());
+        dto.setTransactionReference(savedTransaction.getTransactionReference());
+        dto.setAmount(savedTransaction.getAmount());
+        dto.setTransactionType(savedTransaction.getTransactionType().toString());
+        dto.setStatus(savedTransaction.getStatus().toString());
+        dto.setDescription(savedTransaction.getDescription());
+        dto.setCreatedAt(savedTransaction.getCreatedAt().toString());
+        return dto;
     }
 }
