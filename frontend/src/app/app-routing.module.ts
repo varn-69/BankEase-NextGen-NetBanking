@@ -11,6 +11,7 @@ import { TransactionsComponent } from './transactions/transactions.component';
 import { BillsComponent } from './bills/bills.component';
 import { LoansComponent } from './loans/loans.component';
 import { InvestmentsComponent } from './investments/investments.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -23,7 +24,7 @@ const routes: Routes = [
   { path: 'bills', component: BillsComponent, canActivate: [AuthGuard] },
   { path: 'loans', component: LoansComponent, canActivate: [AuthGuard] },
   { path: 'investments', component: InvestmentsComponent, canActivate: [AuthGuard] },
-  { path: 'profile', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/login' }
 ];

@@ -4,7 +4,76 @@
     <div class="header">
       <h1>Loans</h1>
       <p>Apply for and manage your loans</p>
+      <button mat-raised-button color="primary" (click)="openApplicationDialog()">
+        <mat-icon>add</mat-icon>
+        Apply for Loan
+      </button>
     </div>
-    <p>Loans page - Coming soon</p>
+
+    <div class="content" *ngIf="!loading && !error">
+      <div class="loans-grid" *ngIf="loans.length > 0">
+        <mat-card class="loan-card" *ngFor="let loan of loans">
+          <mat-card-header>
+            <mat-card-title>{{ loan.loanType }}</mat-card-title>
+            <mat-card-subtitle [style.color]="getStatusColor(loan.status)">
+              {{ loan.status }}
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="loan-details">
+              <div class="detail-row">
+                <span class="label">Principal:</span>
+                <span class="value">{{ formatCurrency(loan.principal) }}</span>
+              </div>
+              <div class="detail-row">
+                <span class="label">Interest Rate:</span>
+                <span class="value">{{ loan.interestRate }}% p.a.</span>
+              </div>
+              <div class="detail-row">
+                <span class="label">Tenure:</span>
+                <span class="value">{{ loan.tenureMonths }} months</span>
+              </div>
+              <div class="detail-row">
+                <span class="label">EMI:</span>
+                <span class="value">{{ formatCurrency(loan.emi) }}</span>
+              </div>
+              <div class="detail-row">
+                <span class="label">Outstanding:</span>
+                <span class="value">{{ formatCurrency(loan.outstandingAmount) }}</span>
+              </div>
+              <div class="detail-row">
+                <span class="label">Applied On:</span>
+                <span class="value">{{ formatDate(loan.appliedAt) }}</span>
+              </div>
+              <div class="detail-row" *ngIf="loan.approvedAt">
+                <span class="label">Approved On:</span>
+                <span class="value">{{ formatDate(loan.approvedAt) }}</span>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="empty-state" *ngIf="loans.length === 0">
+        <mat-icon class="empty-icon">account_balance</mat-icon>
+        <h3>No Loans Found</h3>
+        <p>You haven't applied for any loans yet.</p>
+        <button mat-raised-button color="primary" (click)="openApplicationDialog()">
+          Apply for Your First Loan
+        </button>
+      </div>
+    </div>
+
+    <div class="loading-state" *ngIf="loading">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Loading loans...</p>
+    </div>
+
+    <div class="error-state" *ngIf="error">
+      <mat-icon class="error-icon">error_outline</mat-icon>
+      <h3>Error Loading Loans</h3>
+      <p>{{ error }}</p>
+      <button mat-raised-button color="primary" (click)="loadLoans()">Retry</button>
+    </div>
   </div>
 </div>

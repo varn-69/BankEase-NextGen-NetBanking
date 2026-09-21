@@ -1,0 +1,70 @@
+<div class="profile-container">
+  <app-sidebar></app-sidebar>
+  <div class="main-content">
+    <div class="header">
+      <h1>Profile</h1>
+      <p>Manage your account settings</p>
+    </div>
+
+    <div class="content" *ngIf="!loading && currentUser">
+      <mat-card class="profile-card">
+        <mat-card-header>
+          <mat-card-title>User Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="profile-details">
+            <div class="detail-row">
+              <span class="label">Username:</span>
+              <span class="value">{{ currentUser.username }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">Email:</span>
+              <span class="value">{{ currentUser.email }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">User ID:</span>
+              <span class="value">{{ currentUser.userId }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="label">Role:</span>
+              <span class="value">{{ currentUser.role }}</span>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-raised-button color="warn" (click)="openLogoutDialog()">
+            <mat-icon>logout</mat-icon>
+            Logout
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card class="info-card">
+        <mat-card-header>
+          <mat-card-title>Account Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="info-content">
+            <mat-icon class="info-icon">info</mat-icon>
+            <p>This is a college mini-project demonstrating a full-stack banking application with Spring Boot backend and Angular frontend.</p>
+            <p><strong>Features:</strong></p>
+            <ul>
+              <li>User authentication with JWT</li>
+              <li>Account management</li>
+              <li>Fund transfers</li>
+              <li>Bill payments</li>
+              <li>Loan applications</li>
+              <li>Investment portfolio</li>
+              <li>Transaction history</li>
+            </ul>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="loading-state" *ngIf="loading">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Loading profile...</p>
+    </div>
+  </div>
+</div>

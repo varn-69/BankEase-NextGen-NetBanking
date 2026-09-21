@@ -4,7 +4,87 @@
     <div class="header">
       <h1>Investments</h1>
       <p>Manage your investment portfolio</p>
+      <button mat-raised-button color="primary" (click)="openPurchaseDialog()">
+        <mat-icon>add</mat-icon>
+        Purchase Investment
+      </button>
     </div>
-    <p>Investments page - Coming soon</p>
+
+    <div class="portfolio-summary" *ngIf="!loading && !error">
+      <mat-card class="summary-card">
+        <mat-card-content>
+          <div class="summary-content">
+            <mat-icon class="summary-icon">trending_up</mat-icon>
+            <div class="summary-details">
+              <p class="summary-label">Total Portfolio Value</p>
+              <p class="summary-value">{{ formatCurrency(portfolioValue) }}</p>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="content" *ngIf="!loading && !error">
+      <div class="investments-grid" *ngIf="investments.length > 0">
+        <mat-card class="investment-card" *ngFor="let investment of investments">
+          <mat-card-header>
+            <mat-card-title>{{ investment.productName }}</mat-card-title>
+            <mat-card-subtitle>{{ investment.investmentType }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="investment-details">
+              <div class="detail-row">
+                <span class="label">Invested Amount:</span>
+                <span class="value">{{ formatCurrency(investment.amountInvested) }}</span>
+              </div>
+              <div class="detail-row">
+                <span class="label">Current Value:</span>
+                <span class="value">{{ formatCurrency(investment.currentValue) }}</span>
+              </div>
+              <div class="detail-row">
+                <span class="label">Returns:</span>
+                <span class="value" [ngClass]="{'positive': calculateReturns(investment) > 0, 'negative': calculateReturns(investment) < 0}">
+                  {{ formatCurrency(calculateReturns(investment)) }}
+                  ({{ calculateReturnsPercentage(investment).toFixed(2) }}%)
+                </span>
+              </div>
+              <div class="detail-row">
+                <span class="label">Units:</span>
+                <span class="value">{{ investment.units }}</span>
+              </div>
+              <div class="detail-row">
+                <span class="label">Purchase Price:</span>
+                <span class="value">{{ formatCurrency(investment.purchasePrice) }}</span>
+              </div>
+              <div class="detail-row">
+                <span class="label">Purchased On:</span>
+                <span class="value">{{ formatDate(investment.createdAt) }}</span>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <div class="empty-state" *ngIf="investments.length === 0">
+        <mat-icon class="empty-icon">show_chart</mat-icon>
+        <h3>No Investments Found</h3>
+        <p>You haven't made any investments yet.</p>
+        <button mat-raised-button color="primary" (click)="openPurchaseDialog()">
+          Start Investing Today
+        </button>
+      </div>
+    </div>
+
+    <div class="loading-state" *ngIf="loading">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Loading investments...</p>
+    </div>
+
+    <div class="error-state" *ngIf="error">
+      <mat-icon class="error-icon">error_outline</mat-icon>
+      <h3>Error Loading Investments</h3>
+      <p>{{ error }}</p>
+      <button mat-raised-button color="primary" (click)="loadInvestments()">Retry</button>
+    </div>
   </div>
 </div>

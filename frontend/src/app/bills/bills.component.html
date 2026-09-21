@@ -5,6 +5,63 @@
       <h1>Bills</h1>
       <p>Pay your utility bills</p>
     </div>
-    <p>Bills page - Coming soon</p>
+
+    <div class="content" *ngIf="!loading && !error">
+      <div class="bills-grid" *ngIf="bills.length > 0">
+        <mat-card class="bill-card" *ngFor="let bill of bills">
+          <mat-card-header>
+            <mat-card-title>{{ bill.biller }}</mat-card-title>
+            <mat-card-subtitle>{{ bill.category }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="bill-details">
+              <div class="detail-row">
+                <span class="label">Consumer Number:</span>
+                <span class="value">{{ bill.consumerNumber }}</span>
+              </div>
+              <div class="detail-row">
+                <span class="label">Amount:</span>
+                <span class="value amount">{{ formatCurrency(bill.amount) }}</span>
+              </div>
+              <div class="detail-row">
+                <span class="label">Due Date:</span>
+                <span class="value">{{ formatDate(bill.dueDate) }}</span>
+              </div>
+              <div class="detail-row">
+                <span class="label">Status:</span>
+                <span class="value" [style.color]="getStatusColor(bill.status)">
+                  {{ bill.status }}
+                </span>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <button mat-raised-button color="primary"
+                    [disabled]="bill.status === 'PAID' || bill.status === 'CANCELLED'"
+                    (click)="openPaymentDialog(bill)">
+              Pay Bill
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+
+      <div class="empty-state" *ngIf="bills.length === 0">
+        <mat-icon class="empty-icon">receipt_long</mat-icon>
+        <h3>No Bills Found</h3>
+        <p>You don't have any pending bills to pay.</p>
+      </div>
+    </div>
+
+    <div class="loading-state" *ngIf="loading">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Loading bills...</p>
+    </div>
+
+    <div class="error-state" *ngIf="error">
+      <mat-icon class="error-icon">error_outline</mat-icon>
+      <h3>Error Loading Bills</h3>
+      <p>{{ error }}</p>
+      <button mat-raised-button color="primary" (click)="loadBills()">Retry</button>
+    </div>
   </div>
 </div>

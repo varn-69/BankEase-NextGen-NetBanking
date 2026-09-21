@@ -17,11 +17,16 @@ import { BeneficiariesComponent } from './beneficiaries/beneficiaries.component'
 import { AddBeneficiaryDialogComponent } from './beneficiaries/add-beneficiary-dialog.component';
 import { DeleteConfirmationDialogComponent } from './beneficiaries/delete-confirmation-dialog.component';
 import { BillsComponent } from './bills/bills.component';
+import { BillPaymentDialogComponent } from './bills/bill-payment-dialog.component';
 import { InvestmentsComponent } from './investments/investments.component';
+import { PurchaseInvestmentDialogComponent } from './investments/purchase-investment-dialog.component';
 import { LoansComponent } from './loans/loans.component';
+import { LoanApplicationDialogComponent } from './loans/loan-application-dialog.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { TransfersComponent } from './transfers/transfers.component';
 import { TransferConfirmationDialogComponent } from './transfers/transfer-confirmation-dialog.component';
+import { ProfileComponent } from './profile/profile.component';
+import { LogoutConfirmationDialogComponent } from './profile/logout-confirmation-dialog.component';
 
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { AuthService } from './core/services/auth.service';
@@ -47,11 +52,16 @@ import { TransactionService } from './core/services/transaction.service';
     AddBeneficiaryDialogComponent,
     DeleteConfirmationDialogComponent,
     BillsComponent,
+    BillPaymentDialogComponent,
     InvestmentsComponent,
+    PurchaseInvestmentDialogComponent,
     LoansComponent,
+    LoanApplicationDialogComponent,
     TransactionsComponent,
     TransfersComponent,
-    TransferConfirmationDialogComponent
+    TransferConfirmationDialogComponent,
+    ProfileComponent,
+    LogoutConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
