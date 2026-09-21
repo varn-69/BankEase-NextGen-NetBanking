@@ -35,6 +35,7 @@ dist/
 
 # Application
 *.log
+logs/
 .classpath
 .project
 .settings/
