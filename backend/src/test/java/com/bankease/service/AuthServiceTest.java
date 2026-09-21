@@ -80,7 +80,7 @@ public class AuthServiceTest {
         when(userRepository.existsByEmail("test@example.com")).thenReturn(false);
         when(passwordEncoder.encode("password123")).thenReturn("$2a$10$encodedPassword");
         when(userRepository.save(any(User.class))).thenReturn(mockUser);
-        when(tokenProvider.generateToken("testuser", "CUSTOMER")).thenReturn("test-jwt-token");
+        when(tokenProvider.generateToken("testuser", "CUSTOMER", 1L)).thenReturn("test-jwt-token");
 
         AuthResponse response = authService.register(validRegisterRequest);
 
@@ -93,7 +93,7 @@ public class AuthServiceTest {
 
         verify(userRepository).save(any(User.class));
         verify(passwordEncoder).encode("password123");
-        verify(tokenProvider).generateToken("testuser", "CUSTOMER");
+        verify(tokenProvider).generateToken("testuser", "CUSTOMER", 1L);
         verify(auditLogService).log(anyLong(), eq("REGISTER"), eq("USER"), anyLong(), anyString());
     }
 
@@ -121,7 +121,7 @@ public class AuthServiceTest {
     void testSuccessfulLogin() {
         when(userRepository.findByUsername("testuser")).thenReturn(java.util.Optional.of(mockUser));
         when(authenticationManager.authenticate(any())).thenReturn(null);
-        when(tokenProvider.generateToken("testuser", "CUSTOMER")).thenReturn("test-jwt-token");
+        when(tokenProvider.generateToken("testuser", "CUSTOMER", 1L)).thenReturn("test-jwt-token");
 
         AuthResponse response = authService.login(validLoginRequest);
 
@@ -134,7 +134,7 @@ public class AuthServiceTest {
 
         verify(userRepository).save(mockUser);
         verify(authenticationManager).authenticate(any());
-        verify(tokenProvider).generateToken("testuser", "CUSTOMER");
+        verify(tokenProvider).generateToken("testuser", "CUSTOMER", 1L);
         verify(auditLogService).log(anyLong(), eq("LOGIN"), eq("USER"), anyLong(), anyString());
     }
 

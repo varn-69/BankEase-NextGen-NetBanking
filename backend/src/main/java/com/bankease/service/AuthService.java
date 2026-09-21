@@ -54,7 +54,7 @@ public class AuthService {
 
         User savedUser = userRepository.save(user);
 
-        String token = tokenProvider.generateToken(savedUser.getUsername(), savedUser.getRole().toString());
+        String token = tokenProvider.generateToken(savedUser.getUsername(), savedUser.getRole().toString(), savedUser.getId());
 
         auditLogService.log(savedUser.getId(), "REGISTER", "USER", savedUser.getId(), "User registered");
 
@@ -89,7 +89,7 @@ public class AuthService {
             user.setFailedLoginAttempts(0);
             userRepository.save(user);
 
-            String token = tokenProvider.generateToken(user.getUsername(), user.getRole().toString());
+            String token = tokenProvider.generateToken(user.getUsername(), user.getRole().toString(), user.getId());
 
             auditLogService.log(user.getId(), "LOGIN", "USER", user.getId(), "User logged in");
 
